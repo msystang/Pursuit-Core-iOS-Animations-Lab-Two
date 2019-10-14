@@ -71,16 +71,7 @@ class ViewController: UIViewController {
         return button
     }()
     
-    // MARK: - ImageView StackView Objects
-    lazy var ballStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [linearBallView, easeInBallView, easeOutBallView, easeInEaseOutBallView])
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10
-         return stackView
-    }()
-    
+    // MARK: - ImageView Objects
     lazy var linearBallView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "beachBall")
@@ -153,12 +144,18 @@ class ViewController: UIViewController {
     // MARK: - UI Constraint Methods
     private func addSubviews() {
         self.view.addSubview(buttonStackView)
-        self.view.addSubview(ballStackView)
+        self.view.addSubview(linearBallView)
+        self.view.addSubview(easeInBallView)
+        self.view.addSubview(easeOutBallView)
+        self.view.addSubview(easeInEaseOutBallView)
     }
     
     private func addConstraints() {
         configureButtonStackViewConstraints()
-        configureBallStackViewConstraints()
+        configureLinearBallViewConstraints()
+        configureEaseInBallViewConstraints()
+        configureEaseOutBallViewConstraints()
+        configureEaseInEaseOutBallViewConstraints()
     }
     
     private func configureButtonStackViewConstraints() {
@@ -182,5 +179,49 @@ class ViewController: UIViewController {
             self.ballStackView.heightAnchor.constraint(equalToConstant: 100)
         ])
     }
+    
+    private func configureLinearBallViewConstraints() {
+        self.linearBallView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.linearBallView.centerXAnchor.constraint(equalTo: self.linearButton.centerXAnchor),
+            self.linearBallView.topAnchor.constraint(equalTo: linearButton.bottomAnchor, constant: 5),
+            self.linearBallView.widthAnchor.constraint(equalToConstant: 70),
+            self.linearBallView.heightAnchor.constraint(equalToConstant: 70)
+        ])
+    }
+    
+    private func configureEaseInBallViewConstraints() {
+        self.easeInBallView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.easeInBallView.centerXAnchor.constraint(equalTo: self.easeInButton.centerXAnchor),
+            self.easeInBallView.topAnchor.constraint(equalTo: easeInButton.bottomAnchor, constant: 5),
+            self.easeInBallView.widthAnchor.constraint(equalToConstant: 70),
+            self.easeInBallView.heightAnchor.constraint(equalToConstant: 70)
+        ])
+    }
+    
+    private func configureEaseOutBallViewConstraints() {
+          self.easeOutBallView.translatesAutoresizingMaskIntoConstraints = false
+          
+          NSLayoutConstraint.activate([
+              self.easeOutBallView.centerXAnchor.constraint(equalTo: self.easeOutButton.centerXAnchor),
+              self.easeOutBallView.topAnchor.constraint(equalTo: easeOutButton.bottomAnchor, constant: 5),
+              self.easeOutBallView.widthAnchor.constraint(equalToConstant: 70),
+              self.easeOutBallView.heightAnchor.constraint(equalToConstant: 70)
+          ])
+      }
+    
+    private func configureEaseInEaseOutBallViewConstraints() {
+          self.easeInEaseOutBallView.translatesAutoresizingMaskIntoConstraints = false
+          
+          NSLayoutConstraint.activate([
+              self.easeInEaseOutBallView.centerXAnchor.constraint(equalTo: self.easeInEaseOutButton.centerXAnchor),
+              self.easeInEaseOutBallView.topAnchor.constraint(equalTo: easeInEaseOutButton.bottomAnchor, constant: 5),
+              self.easeInEaseOutBallView.widthAnchor.constraint(equalToConstant: 70),
+              self.easeInEaseOutBallView.heightAnchor.constraint(equalToConstant: 70)
+          ])
+      }
 }
 
