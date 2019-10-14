@@ -292,16 +292,15 @@ class ViewController: UIViewController {
     // MARK: - Private Functions
     private func animateLinear() {
         
-        UIView.animate(withDuration: 5.0) { [unowned self] in
+        UIView.animate(withDuration: 5.0, delay: 0, options: [.curveLinear], animations: {
             self.linearBallTopAnchorConstraint.constant = 620
             self.view.layoutIfNeeded()
         }, completion: nil)
-
     }
     
     private func animateEaseOut() {
         
-        UIView.animate(withDuration: 5.0, delay: 0, options: [.curveLinear], animations: {
+        UIView.animate(withDuration: 5.0, delay: 0, options: [.curveEaseOut], animations: {
             self.easeOutBallTopAnchorConstraint.constant = 620
             self.view.layoutIfNeeded()
         }, completion: nil)
