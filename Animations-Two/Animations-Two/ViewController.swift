@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 12)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.tag = 0
+        button.addTarget(self, action: #selector(buttonPressedHideBall(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -40,6 +41,7 @@ class ViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 12)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.tag = 1
+        button.addTarget(self, action: #selector(buttonPressedHideBall(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -52,6 +54,7 @@ class ViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 12)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.tag = 2
+        button.addTarget(self, action: #selector(buttonPressedHideBall(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -64,6 +67,7 @@ class ViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 12)
         button.titleLabel?.adjustsFontSizeToFitWidth = true
         button.tag = 3
+        button.addTarget(self, action: #selector(buttonPressedHideBall(sender:)), for: .touchUpInside)
         return button
     }()
     
@@ -81,7 +85,6 @@ class ViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "beachBall")
         imageView.contentMode = .scaleAspectFit
-        imageView.tag = 0
         return imageView
     }()
     
@@ -89,7 +92,6 @@ class ViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "beachBall")
         imageView.contentMode = .scaleAspectFit
-        imageView.tag = 1
         return imageView
     }()
     
@@ -97,7 +99,6 @@ class ViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "beachBall")
         imageView.contentMode = .scaleAspectFit
-        imageView.tag = 2
         return imageView
     }()
     
@@ -105,7 +106,6 @@ class ViewController: UIViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "beachBall")
         imageView.contentMode = .scaleAspectFit
-        imageView.tag = 3
         return imageView
     }()
     
@@ -119,7 +119,36 @@ class ViewController: UIViewController {
     }
 
     // MARK: - UI Action Methods
-
+    @objc func buttonPressedHideBall(sender: UIButton) {
+        switch sender.tag {
+            case 0:
+                if linearBallView.isHidden {
+                    linearBallView.isHidden = false
+                } else {
+                    linearBallView.isHidden = true
+                }
+            case 1:
+                if easeInBallView.isHidden {
+                    easeInBallView.isHidden = false
+                } else {
+                    easeInBallView.isHidden = true
+                }
+            case 2:
+                if easeOutBallView.isHidden {
+                    easeOutBallView.isHidden = false
+                } else {
+                easeOutBallView.isHidden = true
+                }
+            case 3:
+                if easeInEaseOutBallView.isHidden {
+                    easeInEaseOutBallView.isHidden = false
+                } else {
+                easeInEaseOutBallView.isHidden = true
+                }
+            default:
+                print("This shouldn't happen")
+        }
+    }
 
     // MARK: - UI Constraint Methods
     private func addSubviews() {
