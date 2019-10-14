@@ -79,11 +79,19 @@ class ViewController: UIViewController {
         return imageView
     }()
     
+    lazy var linearBallTopAnchorConstraint: NSLayoutConstraint = {
+        self.linearBallView.topAnchor.constraint(equalTo: linearButton.bottomAnchor, constant: 5)
+    }()
+    
     lazy var easeInBallView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "beachBall")
         imageView.contentMode = .scaleAspectFit
         return imageView
+    }()
+    
+    lazy var easeInBallTopAnchorConstraint: NSLayoutConstraint = {
+        self.easeInBallView.topAnchor.constraint(equalTo: easeInButton.bottomAnchor, constant: 5)
     }()
     
     lazy var easeOutBallView: UIImageView = {
@@ -93,6 +101,10 @@ class ViewController: UIViewController {
         return imageView
     }()
     
+    lazy var easeOutBallTopAnchorConstraint: NSLayoutConstraint = {
+        self.easeOutBallView.topAnchor.constraint(equalTo: easeOutButton.bottomAnchor, constant: 5)
+    }()
+    
     lazy var easeInEaseOutBallView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "beachBall")
@@ -100,11 +112,38 @@ class ViewController: UIViewController {
         return imageView
     }()
     
+    lazy var easeInEaseOutTopAnchorConstraint: NSLayoutConstraint = {
+        self.easeInEaseOutBallView.topAnchor.constraint(equalTo: easeInEaseOutButton.bottomAnchor, constant: 5)
+    }()
+    
+    // MARK: - Settings Button Objects
+    lazy var resetButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Reset", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.showsTouchWhenHighlighted = true
+        button.isUserInteractionEnabled = true
+        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.addTarget(self, action: #selector(buttonPressedResetBalls(sender:)), for: .touchUpInside)
+        return button
+    }()
+    
+    lazy var animateButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Animate", for: .normal)
+        button.setTitleColor(.systemBlue, for: .normal)
+        button.showsTouchWhenHighlighted = true
+        button.isUserInteractionEnabled = true
+        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.addTarget(self, action: #selector(buttonPressedAnimateBalls(sender:)), for: .touchUpInside)
+        return button
+    }()
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        
         addSubviews()
         addConstraints()
     }
@@ -140,6 +179,17 @@ class ViewController: UIViewController {
                 print("This shouldn't happen")
         }
     }
+    
+    @objc func buttonPressedResetBalls(sender: UIButton) {
+        
+    }
+    
+    @objc func buttonPressedAnimateBalls(sender: UIButton) {
+        animateLinear()
+        animateEaseIn()
+        animateEaseOut()
+        animateEaseOutEaseIn()
+    }
 
     // MARK: - UI Constraint Methods
     private func addSubviews() {
@@ -148,6 +198,8 @@ class ViewController: UIViewController {
         self.view.addSubview(easeInBallView)
         self.view.addSubview(easeOutBallView)
         self.view.addSubview(easeInEaseOutBallView)
+        self.view.addSubview(resetButton)
+        self.view.addSubview(animateButton)
     }
     
     private func addConstraints() {
@@ -156,6 +208,8 @@ class ViewController: UIViewController {
         configureEaseInBallViewConstraints()
         configureEaseOutBallViewConstraints()
         configureEaseInEaseOutBallViewConstraints()
+        configureResetButtonConstraints()
+        configureAnimateButtonConstraints()
     }
     
     private func configureButtonStackViewConstraints() {
@@ -169,23 +223,12 @@ class ViewController: UIViewController {
         ])
     }
     
-    private func configureBallStackViewConstraints() {
-        self.ballStackView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            self.ballStackView.topAnchor.constraint(equalTo: self.buttonStackView.safeAreaLayoutGuide.bottomAnchor, constant: 10),
-            self.ballStackView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            self.ballStackView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
-            self.ballStackView.heightAnchor.constraint(equalToConstant: 100)
-        ])
-    }
-    
     private func configureLinearBallViewConstraints() {
         self.linearBallView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             self.linearBallView.centerXAnchor.constraint(equalTo: self.linearButton.centerXAnchor),
-            self.linearBallView.topAnchor.constraint(equalTo: linearButton.bottomAnchor, constant: 5),
+            linearBallTopAnchorConstraint,
             self.linearBallView.widthAnchor.constraint(equalToConstant: 70),
             self.linearBallView.heightAnchor.constraint(equalToConstant: 70)
         ])
@@ -196,7 +239,7 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             self.easeInBallView.centerXAnchor.constraint(equalTo: self.easeInButton.centerXAnchor),
-            self.easeInBallView.topAnchor.constraint(equalTo: easeInButton.bottomAnchor, constant: 5),
+            easeInBallTopAnchorConstraint,
             self.easeInBallView.widthAnchor.constraint(equalToConstant: 70),
             self.easeInBallView.heightAnchor.constraint(equalToConstant: 70)
         ])
@@ -207,7 +250,7 @@ class ViewController: UIViewController {
           
           NSLayoutConstraint.activate([
               self.easeOutBallView.centerXAnchor.constraint(equalTo: self.easeOutButton.centerXAnchor),
-              self.easeOutBallView.topAnchor.constraint(equalTo: easeOutButton.bottomAnchor, constant: 5),
+              easeOutBallTopAnchorConstraint,
               self.easeOutBallView.widthAnchor.constraint(equalToConstant: 70),
               self.easeOutBallView.heightAnchor.constraint(equalToConstant: 70)
           ])
@@ -218,10 +261,38 @@ class ViewController: UIViewController {
           
           NSLayoutConstraint.activate([
               self.easeInEaseOutBallView.centerXAnchor.constraint(equalTo: self.easeInEaseOutButton.centerXAnchor),
-              self.easeInEaseOutBallView.topAnchor.constraint(equalTo: easeInEaseOutButton.bottomAnchor, constant: 5),
+              easeInEaseOutTopAnchorConstraint,
               self.easeInEaseOutBallView.widthAnchor.constraint(equalToConstant: 70),
               self.easeInEaseOutBallView.heightAnchor.constraint(equalToConstant: 70)
           ])
       }
+    
+    private func configureResetButtonConstraints() {
+        self.resetButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.resetButton.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
+            self.resetButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 5),
+            self.resetButton.widthAnchor.constraint(equalToConstant: 100),
+            self.resetButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    private func configureAnimateButtonConstraints() {
+        self.animateButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            self.animateButton.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
+            self.animateButton.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 5),
+            self.animateButton.widthAnchor.constraint(equalToConstant: 100),
+            self.animateButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+    }
+    
+    // MARK: - Private Functions
+    private func animateLinear() {}
+    private func animateEaseOut() {}
+    private func animateEaseIn() {}
+    private func animateEaseOutEaseIn() {}
 }
 
