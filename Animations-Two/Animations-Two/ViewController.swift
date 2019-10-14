@@ -181,7 +181,10 @@ class ViewController: UIViewController {
     }
     
     @objc func buttonPressedResetBalls(sender: UIButton) {
-        
+        self.linearBallTopAnchorConstraint.constant = 0
+        self.easeInBallTopAnchorConstraint.constant = 0
+        self.easeOutBallTopAnchorConstraint.constant = 0
+        self.easeInEaseOutTopAnchorConstraint.constant = 0
     }
     
     @objc func buttonPressedAnimateBalls(sender: UIButton) {
